@@ -40,8 +40,25 @@ export function instrument(sourceCode) {
             },
 
             Function(path) {
+
+                if (!t.isBlockStatement(path.node.body)) return
+
                 const line = path.node.loc?.start.line
-                const name = path.node.id ? path.node.id.name : '(anonymous)'
+
+                // for named functions: function sum() {} → id.name = 'sum'
+                // for arrow functions assigned to variable: const add = () => {} 
+                // the name lives in the parent VariableDeclarator, not the function node
+                let name = '(anonymous)'
+                if (path.node.id) {
+                    name = path.node.id.name
+                } else if (
+                    path.parentPath &&
+                    t.isVariableDeclarator(path.parent) &&
+                    t.isIdentifier(path.parent.id)
+                ) {
+                    name = path.parent.id.name
+                }
+
                 const argsObj = t.objectExpression(
                     path.node.params
                         .filter(p => t.isIdentifier(p))
@@ -56,12 +73,22 @@ export function instrument(sourceCode) {
                     })
                 )
                 path.get('body').unshiftContainer('body', enterTrace)
+
             },
 
             ReturnStatement(path) {
                 const line = path.node.loc?.start.line
                 const funcPath = path.getFunctionParent()
-                const name = funcPath?.node?.id?.name || '(anonymous)'
+                let name = '(anonymous)'
+                if (funcPath?.node?.id) {
+                    name = funcPath.node.id.name
+                } else if (
+                    funcPath?.parentPath &&
+                    t.isVariableDeclarator(funcPath.parent) &&
+                    t.isIdentifier(funcPath.parent.id)
+                ) {
+                    name = funcPath.parent.id.name
+                }
                 const returnArg = path.node.argument
 
                 if (!returnArg) {
@@ -93,6 +120,32 @@ export function instrument(sourceCode) {
                     )
                 )
                 path.get('argument').replaceWith(t.cloneNode(tempVar))
+                path.skip()
+            },
+            AssignmentExpression(path) {
+                const left = path.node.left
+                if (!t.isIdentifier(left)) return
+                const parent = path.parent
+                const grandParent = path.parentPath?.parent
+
+                if (t.isForStatement(grandParent)) return
+
+                if (!t.isExpressionStatement(parent)) return
+
+                const line = path.node.loc?.start.line
+                const parentPath = path.parentPath
+
+                parentPath.insertAfter(
+                    t.expressionStatement(
+                        makeTraceCall({
+                            type: t.stringLiteral('assign'),
+                            name: t.stringLiteral(left.name),
+                            value: t.identifier(left.name),
+                            line: t.numericLiteral(line || 0),
+                        })
+                    )
+                )
+
                 path.skip()
             },
         })

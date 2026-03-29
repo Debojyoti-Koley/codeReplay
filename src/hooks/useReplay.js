@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { instrument } from "../core/instrumentor";
 import { run } from "../core/runner";
 
@@ -21,7 +21,6 @@ export function useReplay() {
     const [error, setError] = useState(null);
     const [isRunning, setIsRunning] = useState(false);
     const [limitWarning, setLimitWarning] = useState(null);
-
 
     const runCode = useCallback(() => {
         setError(null);
@@ -78,6 +77,20 @@ export function useReplay() {
         setCurrentStep(0);
         setIsPlaying(false);
     }, []);
+
+    useEffect(() => {
+        function handleKey(e) {
+            if (e.target.tagName === 'TEXTAREA') return;
+            if (e.key === 'ArrowRight') stepForward()
+            if (e.key === 'ArrowLeft') stepBack()
+            if (e.key === ' ') {
+                e.preventDefault()
+                setIsPlaying(p => !p)
+            }
+        }
+        window.addEventListener('keydown', handleKey)
+        return () => window.removeEventListener('keydown', handleKey)
+    }, [stepForward, stepBack])
 
     return {
         code, setCode,
