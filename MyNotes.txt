@@ -1,0 +1,17 @@
+src/
+├── components/
+│   ├── Editor.jsx          ← Monaco editor wrapper
+│   ├── Timeline.jsx        ← scrubber + play/pause controls
+│   ├── VariablePanel.jsx   ← live variable state display
+│   ├── CallStack.jsx       ← function call stack display
+│   └── ErrorPanel.jsx      ← shows parse/runtime errors
+├── core/
+│   ├── instrumentor.js     ← Babel plugin (the hard core)
+│   ├── runner.js           ← iframe execution + postMessage
+│   └── timeline.js         ← snapshot array + scrub logic
+├── hooks/
+│   └── useReplay.js        ← main state orchestrator
+├── tests/
+│   └── instrumentor.test.js
+├── App.jsx
+└── main.jsx

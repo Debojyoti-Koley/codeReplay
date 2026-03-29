@@ -1,0 +1,81 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    font-family: -apple-system, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    background: #252526;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+.logo {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.tagline {
+    font-size: 13px;
+    color: #888;
+    flex: 1;
+}
+
+.run-btn {
+    background: #0e639c;
+    color: #fff;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.run-btn:hover {
+    background: #1177bb;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.editor-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.right-pane {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #3c3c3c;
+    overflow-y: auto;
+}
+
+.bottom {
+    border-top: 1px solid #3c3c3c;
+    background: #252526;
+    padding: 12px 20px;
+}
+
+.active-line-highlight {
+    background: rgba(255, 200, 0, 0.15) !important;
+    border-left: 2px solid #ffc800;
+}
