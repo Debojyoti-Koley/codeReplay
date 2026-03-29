@@ -32,7 +32,7 @@ export default function App() {
     <div className="app">
       <header className="header">
         <span className="logo">CodeReplay</span>
-        <span className="tagline">Rewind your JavaScript like a video</span>
+        <span className="tagline">Rewind your code like a video</span>
 
         <select className="example-picker" onChange={loadExample} defaultValue="">
           <option value="" disabled>Load example...</option>
