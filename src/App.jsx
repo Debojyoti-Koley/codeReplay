@@ -37,6 +37,7 @@ export default function App() {
 
         <div className='bottom'>
           <Timeline
+            traces={traces}
             total={traces.length}
             currentStep={currentStep}
             isPlaying={isPlaying}
@@ -45,7 +46,6 @@ export default function App() {
             onPause={() => setIsPlaying(false)}
             onStepForward={stepForward}
             onStepBack={stepBack}
-            onStep={step}
             onReset={reset}
           />
         </div>
