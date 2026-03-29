@@ -6,7 +6,7 @@ CodeReplay is a browser-based debugging tool that instruments your JavaScript co
 
 No backend. No install. Fully client-side.
 
-🔗 **[Live Demo](https://codereplay.vercel.app)**
+🔗 **[Live Demo](https://code-replay-penv83tqk-delta-d0427ddf.vercel.app/)**
 
 ---
 
