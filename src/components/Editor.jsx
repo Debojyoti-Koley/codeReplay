@@ -30,20 +30,22 @@ export default function Editor({ code, onChange, currentLine }) {
     }
 
     return (
-        <MonacoEditor
-            height="100%"
-            language="javascript"
-            value={code}
-            onChange={onChange}
-            onMount={handleMount}
-            theme="vs-dark"
-            options={{
-                fontSize: 14,
-                minimap: { enabled: false },
-                scrollBeyondLastLine: false,
-                lineNumbers: 'on',
-                glyphMargin: true,
-            }}
-        />
+        <div style={{ flex: 1, minHeight: 0, overflow: 'hidden' }}>
+            <MonacoEditor
+                height="100%"
+                language="javascript"
+                value={code}
+                onChange={onChange}
+                onMount={handleMount}
+                theme="vs-dark"
+                options={{
+                    fontSize: 14,
+                    minimap: { enabled: false },
+                    scrollBeyondLastLine: false,
+                    lineNumbers: 'on',
+                    glyphMargin: true,
+                }}
+            />
+        </div>
     );
 };
