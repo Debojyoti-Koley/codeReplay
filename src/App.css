@@ -328,13 +328,16 @@
 
     .main {
         flex-direction: column;
-        overflow: visible;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
     }
 
     .editor-pane {
-        height: 45vh;
-        min-height: 200px;
+        height: 30vh;
+        min-height: 160px;
         overflow: hidden;
+        flex-shrink: 0;
     }
 
     .right-pane {
@@ -343,9 +346,9 @@
         border-top: 1px solid #3c3c3c;
         flex-direction: row;
         flex-wrap: wrap;
-        overflow-y: visible;
-        max-height: 220px;
+        max-height: 140px;
         overflow-y: auto;
+        flex-shrink: 0;
     }
 
     .panel {
@@ -393,11 +396,12 @@
 
 @media (max-width: 480px) {
     .editor-pane {
-        height: 40vh;
+        height: 25vh;
+        min-height: 140px;
     }
 
     .right-pane {
-        max-height: 180px;
+        max-height: 120px;
     }
 
     .example-picker {
