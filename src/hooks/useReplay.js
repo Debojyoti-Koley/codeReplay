@@ -80,7 +80,9 @@ export function useReplay() {
 
     useEffect(() => {
         function handleKey(e) {
-            if (e.target.tagName === 'TEXTAREA') return;
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+            // Check if focused element is inside Monaco editor
+            if (e.target.closest('.monaco-editor')) return;
             if (e.key === 'ArrowRight') stepForward()
             if (e.key === 'ArrowLeft') stepBack()
             if (e.key === ' ') {
